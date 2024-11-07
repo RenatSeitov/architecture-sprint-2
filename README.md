@@ -1,16 +1,10 @@
 1. Запускаем команду docker-compose up -d
 
-2. Подключаемся к серверу конфигурации и выполняем инициализацию командой 
+2. Подключаемся к любой ноде и выполняем команду для создания кластера:
 
-docker exec -it mongodb1 mongosh 
+docker exec -it redis_1
+echo "yes" | redis-cli --cluster create   173.17.0.2:6379   173.17.0.3:6379   173.17.0.4:6379   173.17.0.5:6379   173.17.0.6:6379   173.17.0.7:6379   --cluster-replicas 1 
 
-3. Создаём набор реплик в командной оболочке mongosh:
 
-rs.initiate({_id: "rs0", members: [
-{_id: 0, host: "mongodb1:27017"},
-{_id: 1, host: "shard1:27018"},
-{_id: 2, host: "shard2:27019"},
-{_id: 3, host: "shard1_replica:27020"},
-{_id: 4, host: "shard2_replica:27021"},
-]}) 
 
+Ссылка на схему: https://drive.google.com/file/d/1zkt4pBll5Tr1q81WvUaHSwESerXTZCDq/view?usp=sharing
