@@ -1,35 +1,75 @@
-# pymongo-api
+1. Запускаем команду docker-compose up -d
 
-## Как запустить
+2. Подключаемся к серверу конфигурации и выполняем инициализацию командой 
 
-Запускаем mongodb и приложение
 
-```shell
-docker compose up -d
-```
+docker exec -it mongodb1 mongosh --port 27017
 
-Заполняем mongodb данными
+> rs.initiate(
+  {
+    _id : "config_server",
+       configsvr: true,
+    members: [
+      { _id : 0, host : "mongodb1:27017" }
+    ]
+  }
+);
+> exit();
 
-```shell
-./scripts/mongo-init.sh
-```
 
-## Как проверить
+3. Инициализируйте шарды
 
-### Если вы запускаете проект на локальной машине
+docker exec -it shard1 mongosh --port 27018
 
-Откройте в браузере http://localhost:8080
+> rs.initiate(
+    {
+      _id : "shard1",
+      members: [
+        { _id : 0, host : "shard1:27018" },
+       // { _id : 1, host : "shard2:27019" }
+      ]
+    }
+);
+> exit();
 
-### Если вы запускаете проект на предоставленной виртуальной машине
+docker exec -it shard2 mongosh --port 27019
 
-Узнать белый ip виртуальной машины
+> rs.initiate(
+    {
+      _id : "shard2",
+      members: [
+       // { _id : 0, host : "shard1:27018" },
+        { _id : 1, host : "shard2:27019" }
+      ]
+    }
+  );
+> exit();
 
-```shell
-curl --silent http://ifconfig.me
-```
 
-Откройте в браузере http://<ip виртуальной машины>:8080
+4. Инцициализируйте роутер и наполните его тестовыми данными:
 
-## Доступные эндпоинты
+docker exec -it mongos_router mongosh --port 27020
 
-Список доступных эндпоинтов, swagger http://<ip виртуальной машины>:8080/docs
+> sh.addShard( "shard1/shard1:27018");
+> sh.addShard( "shard2/shard2:27019");
+
+> sh.enableSharding("somedb");
+> sh.shardCollection("somedb.helloDoc", { "name" : "hashed" } )
+
+> use somedb
+
+> for(var i = 0; i < 1000; i++) db.helloDoc.insert({age:i, name:"ly"+i})
+
+> db.helloDoc.countDocuments() 
+> exit();
+
+
+5. Сделайте проверку на шардах:
+ Получится результат — 1000 документов.
+
+ docker exec -it shard1 mongosh --port 27018
+ > use somedb;
+ > db.helloDoc.countDocuments();
+ > exit();
+
+
