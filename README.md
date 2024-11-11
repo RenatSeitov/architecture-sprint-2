@@ -7,4 +7,4 @@ echo "yes" | redis-cli --cluster create   173.17.0.2:6379   173.17.0.3:6379   17
 
 
 
-Ссылка на схему: https://drive.google.com/file/d/1zkt4pBll5Tr1q81WvUaHSwESerXTZCDq/view?usp=sharing
+Ссылка на схему: https://drive.google.com/file/d/1D6Kdm-bqJS-S95UtiwcDr5MhQ9NKgxH4/view?usp=sharing
