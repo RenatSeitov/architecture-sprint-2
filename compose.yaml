@@ -79,7 +79,7 @@ services:
     image: "redis:latest"
     container_name: redis_1
     ports:
-      - "6379:6379"
+      - "6380:6379" # порт на хосте 6380, внутри контейнера 6379
     volumes:
       - redis_1_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -92,7 +92,7 @@ services:
     image: "redis:latest"
     container_name: redis_2
     ports:
-      - "6380:6379"
+      - "6381:6379" # порт на хосте 6381, внутри контейнера 6379
     volumes:
       - redis_2_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -105,7 +105,7 @@ services:
     image: "redis:latest"
     container_name: redis_3
     ports:
-      - "6381:6379"
+      - "6382:6379" # порт на хосте 6382, внутри контейнера 6379
     volumes:
       - redis_3_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -118,7 +118,7 @@ services:
     image: "redis:latest"
     container_name: redis_4
     ports:
-      - "6382:6379"
+      - "6383:6379" # порт на хосте 6383, внутри контейнера 6379
     volumes:
       - redis_4_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -131,7 +131,7 @@ services:
     image: "redis:latest"
     container_name: redis_5
     ports:
-      - "6383:6379"
+      - "6384:6379" # порт на хосте 6384, внутри контейнера 6379
     volumes:
       - redis_5_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -144,14 +144,14 @@ services:
     image: "redis:latest"
     container_name: redis_6
     ports:
-      - "6384:6379"
+      - "6385:6379" # порт на хосте 6385, внутри контейнера 6379
     volumes:
       - redis_6_data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     networks:
       app-network:
-        ipv4_address: 173.17.0.7
+        ipv4_address: 173.17.0.10
 
 networks:
   app-network:
@@ -165,9 +165,9 @@ volumes:
   mongodb1_data_container:
   shard1-data:
   shard2-data:
-  redis_1_data: {}
-  redis_2_data: {}
-  redis_3_data: {}
-  redis_4_data: {}
-  redis_5_data: {}
-  redis_6_data: {}
+  redis_1_data:
+  redis_2_data:
+  redis_3_data:
+  redis_4_data:
+  redis_5_data:
+  redis_6_data:
