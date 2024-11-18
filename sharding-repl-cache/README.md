@@ -3,7 +3,7 @@
 
 1. **Start Docker Compose:**
    Run the following command to start the services:
-   ```bash
+  ```bash
    docker-compose up -d
   ```
 2. **Initialize Config Server Replica Set:**
