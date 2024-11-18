@@ -27,7 +27,7 @@
 3. **Initialize Shard Replica Sets:**
    For each shard, connect and initiate its replica set:
 
-   ```
+  ```
 
    docker compose exec -T shard1 mongosh --port 27018 
 
@@ -41,7 +41,7 @@
       }
    );exit();
 
-  docker compose exec -T shard2 mongosh --port 27019
+   docker compose exec -T shard2 mongosh --port 27019
 
     >rs.initiate(
       {
@@ -54,7 +54,7 @@
     );exit(); 
 
 
-   ```
+  ```
 
 4. **Add Shards to the Cluster:** Connect to the mongos container and add shards:
 
@@ -65,8 +65,6 @@
     >sh.enableSharding("somedb");
     >sh.shardCollection("somedb.helloDoc", { "name" : "hashed" } )
     
-
-
     ```
 
 5. **Заполняем mongodb данными**
